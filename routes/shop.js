@@ -7,7 +7,8 @@ console.log(rootDir)
 const Router = express.Router()
 
 Router.get('/',(req, res) => {
-    res.render('shop')    
+    const products = adminData.products;
+    res.render('shop', {prods: products, docTitle: "Shop", path:"/"})    
 })
 
 module.exports = Router;
