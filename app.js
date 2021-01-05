@@ -1,5 +1,6 @@
 const express = require('express')
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser')
+const expressHbs = require('express-handlebars')
 
 const rootDir = require('./utils/path')
 
@@ -14,8 +15,13 @@ const app = express()
 app.use(bodyParser.urlencoded({extended: false}));
 
 // Setting PUG template engine globally to our express application
-app.set('view engine', 'pug');
-app.set('views', 'views');
+// app.set('view engine', 'pug');
+// app.set('views', 'views');
+
+// Setting handlebars template engine
+app.engine('hbs', expressHbs({layoutsDir: 'views/layouts/', defaultLayout: 'main-layout', extname: 'hbs'}))
+app.set('view engine', 'hbs')
+app.set('views', 'views')
 
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')))
