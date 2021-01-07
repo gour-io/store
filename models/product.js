@@ -27,6 +27,9 @@ class Product {
     }
 
     save() {
+        // generate id and add to object
+        this.id = parseInt((Math.random() * 1000)).toString()
+
         getProductsFromFile(products => {
             products.push(this)
             fs.writeFile(p, JSON.stringify(products), (err) => {
@@ -38,6 +41,13 @@ class Product {
 
     static fetchAll(cb) {
         getProductsFromFile(cb)
+    }
+
+    static findById(id, cb) {
+        getProductsFromFile(products => {
+            const product = products.find(p => p.id === id)
+            cb(product)
+        })
     }
 }
 

@@ -2,7 +2,8 @@ const express = require('express')
 
 const { 
     getIndex, 
-    getProducts, 
+    getProducts,
+    getProduct, 
     getCart,
     getOrders, 
     getCheckout 
@@ -13,6 +14,8 @@ const router= express.Router()
 router.get('/', getIndex)
 
 router.get('/products', getProducts)
+
+router.get('/products/:productId', getProduct)
 
 router.get('/cart', getCart)
 
