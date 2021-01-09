@@ -8,7 +8,7 @@
 .form-control {
     width: 20rem;
     max-width: 95%;
-    margin: 1rem;
+    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
     font-size: 1.2rem;
