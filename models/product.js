@@ -2,8 +2,8 @@ const Cart = require('./cart')
 const db = require('../utils/database')
 // PRODUCT CLASS
 class Product {
-    constructor(id, title, imageUrl, price, description) {
-        this.id = id;
+    constructor(id, title, price, description, imageUrl) {
+        this.id = id
         this.title = title;
         this.imageUrl = imageUrl;
         this.price = price;
@@ -11,7 +11,9 @@ class Product {
     }
 
     save() {
-        
+        return db.execute('INSERT INTO products (title, price, description, imageUrl) VALUES (?, ?, ?, ?)',
+            [this.title, this.price, this.description, this.imageUrl]
+        )
     }
 
     static deleteById(id) {
