@@ -11,12 +11,6 @@ const { get404 } = require('./controllers/error')
 const adminRoutes = require('./routes/admin')
 const shopRoutes = require('./routes/shop')
 
-db.execute('SELECT * FROM products')
-    .then((result, fields) => {
-        console.log(result[0][0].price)
-    })
-    .catch(err => console.log(err))
-
 const PORT = process.env.PORT || 3000;
 const app = express()
 
