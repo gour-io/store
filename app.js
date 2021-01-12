@@ -8,8 +8,13 @@ const path = require('path')
 
 const { get404 } = require('./controllers/error')
 
+// routers
 const adminRoutes = require('./routes/admin')
 const shopRoutes = require('./routes/shop')
+
+//models
+const User = require('./models/user');
+const Product = require('./models/product')
 
 const PORT = process.env.PORT || 3000;
 const app = express()
@@ -27,7 +32,12 @@ app.use(shopRoutes)
 
 app.use(get404)
 
-sequelize.sync()
+Product.belongsTo(User, {constraints: true, onDelete: 'CASCADE'})
+User.hasMany(Product)
+
+sequelize
+    // .sync({force: true})
+    .sync()
     .then(result => {
         // console.log(result)
         app.listen(PORT)
