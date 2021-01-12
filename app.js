@@ -27,10 +27,23 @@ app.set('views', 'views')
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')))
 
+// middleware adding user sequelize object to all request
+app.use((req, res, next) => {
+    User.findByPk(1)
+        .then(user => {
+            return req.user = user
+        })
+        .then(result => {
+            next()
+        })
+        .catch(err => console.log(err))
+})
+
 app.use('/admin', adminRoutes)
 app.use(shopRoutes)
 
 app.use(get404)
+
 
 Product.belongsTo(User, {constraints: true, onDelete: 'CASCADE'})
 User.hasMany(Product)
@@ -48,7 +61,7 @@ sequelize
         return user; // then always return promise, explicit return promise like "Promise.resolve(user)" 
     })
     .then(user => {
-        // console.log(user)
+        // console.log(user) 
         app.listen(PORT)
     })
     .catch(err => console.log(err))

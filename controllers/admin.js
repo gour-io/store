@@ -10,13 +10,15 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res) => {
     const { title, price, imageUrl, description } = req.body;
-    console.log(req.body)
-    Product.create({
+    // magic association method User.createProduct({})
+    console.log(req.user)
+    req.user.createProduct({
         title: title,
         price: price,
         imageUrl: imageUrl,
         description: description
-    }).then(result => {
+    })
+    .then(result => {
             console.log("created product successfully")
             res.redirect('/admin/products')
         })
