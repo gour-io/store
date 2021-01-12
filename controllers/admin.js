@@ -30,9 +30,11 @@ exports.getEditProduct = (req, res, next) => {
     if(!editMode) {
         return res.redirect('/')
     }
-    const productId = req.params.productId
-    Product.findByPk(productId)
-        .then(product => {
+    const prodId = req.params.productId
+    // Product.findByPk(productId)
+    req.user.getProducts({where: {id: prodId}})
+        .then(products => {
+            const product = products[0]
             if(!product) {
                 return res.send('<code>Product id is not valid.</code>')
             }
@@ -71,7 +73,8 @@ exports.postEditProduct = (req, res, next) => {
 }
 
 exports.getProducts = (req, res, next) => {
-    Product.findAll()
+    // Product.findAll()
+    req.user.getProducts()
         .then(products => {
             res.render('admin/products', {
                 prods: products, 
