@@ -38,8 +38,17 @@ User.hasMany(Product)
 sequelize
     // .sync({force: true})
     .sync()
-    .then(result => {
-        // console.log(result)
+    .then(result => { 
+        return User.findByPk(1);
+    })
+    .then(user => {
+        if(!user) {
+            return User.create({name: "Deepak", email: 'goodman@gmail.com'})
+        }
+        return user; // then always return promise, explicit return promise like "Promise.resolve(user)" 
+    })
+    .then(user => {
+        // console.log(user)
         app.listen(PORT)
     })
     .catch(err => console.log(err))
