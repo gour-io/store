@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 
 const rootDir = require('./utils/path')
-const db = require('./utils/database')
+const sequelize = require('./utils/database')
 
 const path = require('path')
 
@@ -27,4 +27,9 @@ app.use(shopRoutes)
 
 app.use(get404)
 
-app.listen(PORT)
+sequelize.sync()
+    .then(result => {
+        // console.log(result)
+        app.listen(PORT)
+    })
+    .catch(err => console.log(err))
